@@ -1,29 +1,37 @@
-FROM alpine:3.6
+FROM bianjp/mariadb-alpine:latest
 
-ARG FROM_REPOSITORY=https://github.com/calzoneman/sync
+ENV MYSQL_HOST=localhost \
+	MYSQL_PORT=3306 \
+	MYSQL_DATABASE=cytube3 \
+	MYSQL_USER=cytube3 \
+	MYSQL_PASSWORD=UltraSecretPass \
+	MYSQL_ROOT_PASSWORD=UltraSecretRootPass \
+	HTTP_PORT=8080 \
+	HTTP=true \
+	HTTPS_PORT=8443	\
+	HTTPS=false \
+	IO=true \
+	IO_PORT=1337 \
+	IO_DOMAIN=http://localhost \
+	ROOT_DOMAIN=localhost \
+	USE_MINIFY=false \
+	COOKIE_SECRET=change-me \
+	SYNC_CRTKEY=null \
+	SYNC_CRT=null \
+	SYNC_CRTCA=null \
+	SYNC_TITLE=Sync \
+	SYNC_DESCRIPTION="Free, open source synchtube" \
+	YOUTUBE_KEY=null \
+	CHANNEL_STORAGE=file \
+	VIMEO_WORKAROUND=false \
+	TWITCH_ID=null \
+	MIXER_ID=null
 
 ADD scripts /scripts
 
 RUN sh /scripts/container-install.sh
 
 WORKDIR /app
-
-ENV MYSQL_HOST=localhost \
-	MYSQL_PORT=3306 \
-	MYSQL_DATABASE=cytube \
-	MYSQL_USER=cytube \
-	MYSQL_PASSWORD=nico_best_girl \
-	MYSQL_ROOT_PASSWORD=ruby_best_girl \
-	SYNC_TITLE=Sync \
-	SYNC_DESCRIPTION="Sync Video" \
-	ROOT_URL=http://localhost:8080 \
-	ROOT_PORT=8080 \
-	IO_ROOT_URL=http://localhost \
-	IO_ROOT_PORT=1337 \
-	ROOT_DOMAIN=localhost:8080 \
-	HTTPS_ENABLED=false \
-	YOUTUBE_KEY=your_youtube_key \
-	TWITCH_CLIENT_ID=your_twitch_client_id
 
 EXPOSE 8080 1337
 
