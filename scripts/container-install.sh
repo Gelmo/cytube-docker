@@ -3,14 +3,19 @@
 set -e
 
 apk update
-apk add build-base python git nodejs nodejs-npm curl gettext ffmpeg
+apk add build-base python git nodejs nodejs-npm curl gettext ffmpeg su-exec pcre-dev
+
 npm install npm@latest -g
 
-git clone https://github.com/calzoneman/sync /app
+adduser -S cytube
 
-cd /app
-cp -f /scripts/config.docker.yaml /app
-cp -f /scripts/run.sh /app
+git clone -b 3.0 https://github.com/calzoneman/sync /home/cytube/app
 
-npm install
-npm run build-server
+cd /home/cytube/app
+sed 's/67c7c69a/ffdbce83/' package.json
+cp -f /scripts/config.docker.yaml /home/cytube/app
+cp -f /scripts/run.sh /home/cytube/app
+chown -R cytube /home/cytube/app
+
+su-exec cytube npm install
+
