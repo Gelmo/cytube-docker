@@ -19,4 +19,4 @@ cp -f /scripts/run.sh /home/cytube/app
 chown -R cytube /home/cytube
 
 su-exec cytube npm install
-
+su-exec cytube npm run build-server
