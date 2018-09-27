@@ -1,4 +1,4 @@
-FROM bianjp/mariadb-alpine:latest
+FROM mariadb:latest
 
 ENV MYSQL_HOST=localhost \
 	MYSQL_PORT=3306 \

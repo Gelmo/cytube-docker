@@ -2,21 +2,22 @@
 
 set -e
 
-apk update
-apk add build-base python git nodejs nodejs-npm curl gettext ffmpeg su-exec pcre-dev
+apt update
+apt install -y curl
+curl -sL https://deb.nodesource.com/setup_10.x | bash -
+apt update
+apt install -y build-essential python git nodejs gettext ffmpeg gosu
 
 npm install npm@latest -g
 
-adduser -S cytube
-
+groupadd -r cytube && useradd -r -g cytube cytube
 
 git clone -b 3.0 https://github.com/calzoneman/sync /home/cytube/app
 mkdir -p /home/cytube/certs
 cd /home/cytube/app
-sed 's/67c7c69a/ffdbce83/' package.json
 cp -f /scripts/config.docker.yaml /home/cytube/app
 cp -f /scripts/run.sh /home/cytube/app
 chown -R cytube /home/cytube
 
-su-exec cytube npm install
-su-exec cytube npm run build-server
+gosu cytube npm install
+gosu cytube npm run build-server
