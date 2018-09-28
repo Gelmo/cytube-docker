@@ -17,7 +17,7 @@ sed 's/67c7c69a/ffdbce83/' package.json
 cp -f /scripts/config.docker.yaml /home/cytube/app
 cp -f /scripts/run.sh /home/cytube/app
 cp -f /scripts/package.json /home/cytube/app
-cp -f /scripts/filters.js /home/cytube/src/channel
+cp -f /scripts/filters.js /home/cytube/app/src/channel
 chown -R cytube /home/cytube
 
 echo "GRANT USAGE ON *.* TO ${MYSQL_USER}@'127.0.0.1' IDENTIFIED BY '${MYSQL_PASSWORD}';" > /tmp/sql
