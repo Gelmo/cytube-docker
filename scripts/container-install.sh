@@ -20,5 +20,17 @@ cp -f /scripts/package.json /home/cytube/app
 cp -f /scripts/filters.js /home/cytube/src/channel
 chown -R cytube /home/cytube
 
+echo "GRANT USAGE ON *.* TO ${MYSQL_USER}@'127.0.0.1' IDENTIFIED BY '${MYSQL_PASSWORD}';" > /tmp/sql
+echo "GRANT USAGE ON *.* TO ${MYSQL_USER}@'localhost' IDENTIFIED BY '${MYSQL_PASSWORD}';" >> /tmp/sql
+echo "GRANT USAGE ON *.* TO ${MYSQL_USER}@'::1' IDENTIFIED BY '${MYSQL_PASSWORD}';" >> /tmp/sql
+echo "GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO ${MYSQL_USER}@'127.0.0.1' IDENTIFIED BY '${MYSQL_PASSWORD}';" >> /tmp/sql
+echo "GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO ${MYSQL_USER}@'localhost' IDENTIFIED BY '${MYSQL_PASSWORD}';" >> /tmp/sql
+echo "GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO ${MYSQL_USER}@'::1' IDENTIFIED BY '${MYSQL_PASSWORD}';" >> /tmp/sql
+echo "DELETE FROM mysql.user WHERE User='';" >> /tmp/sql
+echo "DROP DATABASE test;" >> /tmp/sql
+echo "CREATE DATABASE ${MYSQL_DATABASE};" >> /tmp/sql
+echo "FLUSH PRIVILEGES;" >> /tmp/sql
+cat /tmp/sql | mysql -u root --password="${MYSQL_ROOT_PASSWORD}"
+
 su-exec cytube npm install
 su-exec cytube npm run build-server
