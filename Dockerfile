@@ -31,7 +31,7 @@ ADD scripts /scripts
 
 RUN sh /scripts/container-install.sh
 
-WORKDIR /app
+WORKDIR /home/cytube/app
 
 EXPOSE 8080 1337
 
