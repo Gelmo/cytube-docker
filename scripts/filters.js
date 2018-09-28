@@ -1,4 +1,3 @@
-var FilterList = require("cytubefilters");
 var ChannelModule = require("./module");
 
 const LOGGER = require('@calzoneman/jsli')('filters');
