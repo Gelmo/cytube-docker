@@ -17,7 +17,7 @@ sed 's/67c7c69a/ffdbce83/' package.json
 cp -f /scripts/config.docker.yaml /home/cytube/app
 cp -f /scripts/run.sh /home/cytube/app
 cp -f /scripts/package.json /home/cytube/app
-cp -f /scripts/filters.js /home/cytube/app
+cp -f /scripts/filters.js /home/cytube/src/channel
 chown -R cytube /home/cytube
 
 su-exec cytube npm install
