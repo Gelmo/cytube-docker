@@ -29,9 +29,19 @@ ENV MYSQL_HOST=localhost \
 	LC_ALL=en_US.UTF-8
 
 RUN mkdir /docker-entrypoint-initdb.d && \
+	apk update && \
 	apk -U upgrade && \
 	apk add --no-cache mariadb mariadb-client && \
 	apk add --no-cache tzdata && \
+	apk add --no-cache build-base \
+	python \
+	git \
+	nodejs \
+	nodejs-npm \
+	curl \
+	gettext \
+	ffmpeg \
+	su-exec && \
 	# clean up
 	rm -rf /var/cache/apk/*
 
