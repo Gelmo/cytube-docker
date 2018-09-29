@@ -33,6 +33,8 @@ RUN sh /scripts/container-install.sh
 
 WORKDIR /home/cytube/app
 
+ENTRYPOINT ["docker-entrypoint.sh"]
+
 EXPOSE 8080 1337
 
 CMD ["sh", "run.sh"]
