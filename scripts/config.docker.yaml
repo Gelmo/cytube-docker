@@ -8,7 +8,7 @@ mysql:
   port: ${MYSQL_PORT}
   database: '${MYSQL_DATABASE}'
   user: '${MYSQL_USER}'
-  password: ${MYSQL_PASSWORD}''
+  password: '${MYSQL_PASSWORD}'
   pool-size: 10
 
 # Define IPs/ports to listen on
