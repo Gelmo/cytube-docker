@@ -1,4 +1,4 @@
-FROM bianjp/mariadb-alpine:latest
+FROM alpine:latest
 
 ENV MYSQL_HOST=localhost \
 	MYSQL_PORT=3306 \
@@ -25,7 +25,28 @@ ENV MYSQL_HOST=localhost \
 	CHANNEL_STORAGE=file \
 	VIMEO_WORKAROUND=false \
 	TWITCH_ID=null \
-	MIXER_ID=null
+	MIXER_ID=null \
+	LC_ALL=en_US.UTF-8
+
+RUN mkdir /docker-entrypoint-initdb.d && \
+	apk -U upgrade && \
+	apk add --no-cache mariadb mariadb-client && \
+	apk add --no-cache tzdata && \
+	# clean up
+	rm -rf /var/cache/apk/*
+
+RUN sed -Ei 's/^(bind-address|log)/#&/' /etc/mysql/my.cnf && \
+	# don't reverse lookup hostnames, they are usually another container
+	sed -i '/^\[mysqld]$/a skip-host-cache\nskip-name-resolve' /etc/mysql/my.cnf && \
+	# always run as user mysql
+	sed -i '/^\[mysqld]$/a user=mysql' /etc/mysql/my.cnf && \
+	# allow custom configurations
+	echo -e '\n!includedir /etc/mysql/conf.d/' >> /etc/mysql/my.cnf && \
+	mkdir -p /etc/mysql/conf.d/
+
+VOLUME /var/lib/mysql
+
+COPY docker-entrypoint.sh /usr/local/bin/
 
 ADD scripts /scripts
 
@@ -35,6 +56,6 @@ WORKDIR /home/cytube/app
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 
-EXPOSE 8080 1337
+EXPOSE 8080 1337 3306
 
 CMD ["sh", "run.sh"]
