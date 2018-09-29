@@ -19,7 +19,7 @@ cp -f /scripts/config.docker.yaml /home/cytube/app
 cp -f /scripts/run.sh /home/cytube/app
 chown -R cytube /home/cytube
 
-mysqld_safe &
+nohup sh -c mysqld_safe &
 
 echo "DELETE FROM mysql.user WHERE User='';" >> /tmp/sql
 echo "GRANT USAGE ON *.* TO ${MYSQL_USER}@'127.0.0.1' IDENTIFIED BY '${MYSQL_PASSWORD}';" > /tmp/sql
