@@ -54,6 +54,8 @@ RUN sed -Ei 's/^(bind-address|log)/#&/' /etc/mysql/my.cnf && \
 	echo -e '\n!includedir /etc/mysql/conf.d/' >> /etc/mysql/my.cnf && \
 	mkdir -p /etc/mysql/conf.d/
 
+RUN chmod +x /scripts/docker-entrypoint.sh
+
 VOLUME /var/lib/mysql
 
 ADD scripts /scripts
