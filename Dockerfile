@@ -60,8 +60,12 @@ ADD scripts /scripts
 
 RUN chmod +x /scripts/docker-entrypoint.sh
 
+RUN chmod +x /scripts/run.sh
+
 WORKDIR /home/cytube/app
 
 ENTRYPOINT ["/scripts/docker-entrypoint.sh"]
 
 EXPOSE 8080 1337 3306
+
+CMD ["/scripts/run.sh"]
