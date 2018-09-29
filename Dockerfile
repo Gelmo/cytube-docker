@@ -56,12 +56,10 @@ RUN sed -Ei 's/^(bind-address|log)/#&/' /etc/mysql/my.cnf && \
 
 VOLUME /var/lib/mysql
 
-COPY docker-entrypoint.sh /usr/local/bin/
-
 ADD scripts /scripts
 
 WORKDIR /home/cytube/app
 
-ENTRYPOINT ["docker-entrypoint.sh"]
+ENTRYPOINT ["/scripts/docker-entrypoint.sh"]
 
 EXPOSE 8080 1337 3306
